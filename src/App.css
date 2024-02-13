@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.contacts--card {
+  height: 90vh;
+  width: 350px;
+  background-color: white;
+  margin: 20px;
+  margin-left: 30px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border-radius: 3%;
+}
+
+.search--box {
+  background-color: rgba(237, 237, 237, 0.279);
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid gray;
+  outline: none;
+  width: 250px;
+}
