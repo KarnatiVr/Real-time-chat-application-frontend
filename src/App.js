@@ -1,19 +1,9 @@
 import './App.css';
 // import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Home from './pages/home';
-import Chat from './pages/chats';
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-const router = createBrowserRouter([
-    {
-    path: "/",
-    element: <Home />,
-  },
-  {
-    path: "/chat",
-    element: <Chat />,
-  }
-]);
+import {  RouterProvider } from "react-router-dom";
+import router from './routes';
+
 
 function App() {
   return (
