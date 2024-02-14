@@ -49,6 +49,7 @@ const Test = () => {
       >
         Send
       </button>
+      <p>{socketRef.current?.id}</p>
       <p className="text-xl font-bold px-5 py-5">{response}</p>
     </div>
   );

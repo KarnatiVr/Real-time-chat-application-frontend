@@ -20,3 +20,12 @@
   outline: none;
   width: 250px;
 }
+.signin--button{
+  background-color: rgba(97, 180, 244, 0.279);
+}
+.signup--link:hover, .fpass--link:hover, .login--link:hover{
+ cursor: pointer;
+}
+.create--button{
+  background-color: rgba(97, 180, 244, 0.279);
+}
