@@ -23,9 +23,35 @@
 .signin--button{
   background-color: rgba(97, 180, 244, 0.279);
 }
-.signup--link:hover, .fpass--link:hover, .login--link:hover{
+.signup--link:hover, .fpass--link:hover, .login--link:hover,.contact:hover{
  cursor: pointer;
 }
 .create--button{
   background-color: rgba(97, 180, 244, 0.279);
+}
+
+.chat--card {
+  height: 90vh;
+  width: 700px;
+  background-color: white;
+  margin: 20px;
+  margin-left: 30px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border-radius: 3%;
+}
+.chat--box{
+  height: 82%;
+  width: 100%;
+}
+.message--box{
+  border-radius: 20px;
+  height: 45px;
+  width: 90%;
+  padding: 5px;
+  padding-left: 15px;
+}
+.send--button{
+  height: 35px;
+  width: 7%;
+  margin-top: 2px;
 }

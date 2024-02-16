@@ -4,11 +4,11 @@ import Chat from '../components/chat'
 
 const Chats = () => {
   return (
-    <div className='chats--page'>
-        <Chat/>
-        <ContactsCard/>
+    <div className="chats--page flex flex-row justify-center">
+      <ContactsCard />
+      <Chat />
     </div>
-  )
+  );
 }
 
 export default Chats
