@@ -23,7 +23,7 @@
 .signin--button{
   background-color: rgba(97, 180, 244, 0.279);
 }
-.signup--link:hover, .fpass--link:hover, .login--link:hover,.contact:hover{
+.signup--link:hover, .fpass--link:hover, .login--link:hover,.contact:hover,.search--contact:hover{
  cursor: pointer;
 }
 .create--button{
@@ -54,4 +54,26 @@
   height: 35px;
   width: 7%;
   margin-top: 2px;
+}
+.test--card{
+  height: 50vh;
+  width: 500px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+}
+.dropdown{
+  height: fit-content;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.search--contact:hover{
+  cursor:pointer;
+  background-color: rgba(97, 180, 244, 0.279);
 }

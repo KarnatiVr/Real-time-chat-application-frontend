@@ -1,4 +1,4 @@
-import createSlice from "@reduxjs/toolkit"
+import {createSlice} from "@reduxjs/toolkit"
 
 const initialState = {
     contacts: [],
@@ -17,3 +17,7 @@ export const contactsSlice = createSlice({
         }
     }
 })
+
+export const { setContacts, setContactsMatchSearch } = contactsSlice.actions;
+
+export default contactsSlice.reducer;

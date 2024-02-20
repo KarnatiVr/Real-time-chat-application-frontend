@@ -8,6 +8,7 @@ const Chat = () => {
           src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
           width={40}
           height={40}
+          alt="profile"
         ></img>
         <h2 className="text-lg font-bold ml-3 mt-1">Venkat</h2>
       </div>
