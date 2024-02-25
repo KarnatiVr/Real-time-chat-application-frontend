@@ -1,6 +1,10 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 const Chat = () => {
+
+  const chat=useSelector((state) => state.chats.currentChat);
+
   return (
     <div className="chat--card">
       <div className="flex h-100 w-full px-5 py-3 border-b">
@@ -10,7 +14,7 @@ const Chat = () => {
           height={40}
           alt="profile"
         ></img>
-        <h2 className="text-lg font-bold ml-3 mt-1">Venkat</h2>
+        <h2 className="text-lg font-bold ml-3 mt-1"></h2>
       </div>
       <div className=" chat--box flex flex-col w-full px-5 py-3"></div>
       <div className=" send--message--box flex flex-row w-full py-3 gap-3">

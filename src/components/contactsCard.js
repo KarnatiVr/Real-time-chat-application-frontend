@@ -1,9 +1,13 @@
 import React, { useEffect } from "react";
 import Contact from "./Contact";
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { setContacts, setContactsMatchSearch } from "../features/contacts/contactsSlice";
 import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  clearData,
+  setContacts,
+  setContactsMatchSearch,
+} from "../features/contacts/contactsSlice";
 const ContactsCard = () => {
   let user = useSelector((state) => state.user.loggedInUser);
   const [isOpen, setIsOpen] = useState(false);
@@ -11,56 +15,77 @@ const ContactsCard = () => {
   const dispatch = useDispatch();
   let userID = user._id;
   console.log(user);
+
   async function fetchContacts() {
     try {
-      console.log(userID);
       const response = await axios.post("http://localhost:4000/fetchContacts", {
         id: userID,
       });
-      console.log("fetching Chats", response.data);
-      dispatch(setContacts(response.data));
+      const contacts = response.data;
+      console.log(contacts);
+      dispatch(setContacts(contacts));
     } catch (error) {
       console.log(error);
     }
+    console.log(userID);
   }
 
   useEffect(() => {
     fetchContacts();
-  }, []); // Empty dependency array to run only once when the component mounts
+  }, []);
 
   async function fetchContactsMatchSearch() {
+    console.log(userID);
+    console.log(message);
     try {
-      console.log(userID);
-      console.log(message);
       const response = await axios.post(
         "http://localhost:4000/fetchContactsMatchSearchParam",
-        {searchParam:message}
+        { searchParam: message }
       );
-      console.log("fetching Chats", response.data);
-      dispatch(setContactsMatchSearch(response.data));
+      console.log(response.data);
+      const contacts = response.data;
+      dispatch(setContactsMatchSearch(contacts));
     } catch (error) {
       console.log(error);
     }
   }
-  console.log(message);
+
   async function HandleChange(event) {
     setMessage(event.target.value);
     if (event.target.value !== " ") {
       await fetchContactsMatchSearch();
       setIsOpen(true);
     } else {
-      dispatch(setContactsMatchSearch([]));
+      console.log("CLEARING DATA");
+      dispatch(clearData());
     }
   }
-  function HandleClickContact(_id){
-    const contact=contactsMatchSearch.find((contact) => contact._id === _id);
-    
+
+  async function HandleClickContact(_id) {
+    const contact = contactsMatchSearch.find((contact) => contact._id === _id);
+    const chat_name = user.name + "-" + contact.name;
+    const users = [user._id, contact._id];
+    try {
+      const response = await axios
+        .post("http://localhost:4000/createChat", {
+          chat_name: chat_name,
+          users: users,
+        })
+        .then((response) => {
+          setIsOpen(false);
+          setMessage("");
+          fetchContacts();
+        });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   const contacts = useSelector((state) => state.contacts.contacts);
   const contactsMatchSearch = useSelector(
     (state) => state.contacts.contactsMatchSearch
   );
+
   return (
     <div className="contacts--card">
       <h1 className="text-xl font-bold px-5 py-5">Messages</h1>
@@ -73,8 +98,13 @@ const ContactsCard = () => {
       />
       {isOpen && (
         <div className="dropdown">
-          {contactsMatchSearch.map((_id,option) => (
-            <p className=" search--contact text-xl px-2 py-2" onClick={HandleClickContact(_id)}>{option.name}</p>
+          {contactsMatchSearch.map((option) => (
+            <p
+              className=" search--contact text-xl px-2 py-2"
+              onClick={() => HandleClickContact(option._id)}
+            >
+              {option.name}
+            </p>
           ))}
         </div>
       )}

@@ -71,6 +71,9 @@
   flex-direction: column;
   gap: 5px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  position: relative;
+  left: 23px;
+  top: -25px;
 }
 
 .search--contact:hover{
