@@ -1,9 +1,18 @@
 import React from 'react'
-
+import {  useDispatch } from "react-redux";
+import { setCurrentChat } from '../features/chats/chatsSlice'
 const Contact = (props) => {
+
+  const dispatch = useDispatch();
+  
+  function HandleClick() {
+    dispatch(setCurrentChat(props.contact))
+    console.log("clicked")
+  }
+
   console.log(props.contact.user.name)
   return (
-    <div className="contact flex flex-row gap-3">
+    <div className="contact flex flex-row gap-3" onClick={HandleClick}>
       <img
         src={props.contact.image?props.contact.image:"https://cdn-icons-png.flaticon.com/512/3135/3135715.png"}
         alt="profile"

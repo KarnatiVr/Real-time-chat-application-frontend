@@ -29,9 +29,10 @@ const Home = () => {
     e.preventDefault();
     console.log(loginData)
     try {
-      const response = await axios.post("http://localhost:4000/login", loginData);
+      const response = await axios.post("http://localhost:4000/login" ,{...loginData, credentials:true}, { withCredentials: true });
       console.log("User loggedin successfully:", response.data);
-      dispatch(userLoggedIn({...response.data, loggedIn: true}))
+      const { loggedInUser } = response.data;
+      dispatch(userLoggedIn({ ...loggedInUser, loggedIn: true }));
       console.log(user)
       navigate("/chat");
 

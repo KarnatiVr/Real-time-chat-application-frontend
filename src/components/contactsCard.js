@@ -18,9 +18,13 @@ const ContactsCard = () => {
 
   async function fetchContacts() {
     try {
-      const response = await axios.post("http://localhost:4000/fetchContacts", {
-        id: userID,
-      });
+      const response = await axios.post(
+        "http://localhost:4000/fetchContacts",
+        {
+          id: userID,
+        },
+        { withCredentials: true }
+      );
       const contacts = response.data;
       console.log(contacts);
       dispatch(setContacts(contacts));
@@ -40,7 +44,8 @@ const ContactsCard = () => {
     try {
       const response = await axios.post(
         "http://localhost:4000/fetchContactsMatchSearchParam",
-        { searchParam: message }
+        { searchParam: message },
+        { withCredentials: true }
       );
       console.log(response.data);
       const contacts = response.data;
@@ -67,10 +72,14 @@ const ContactsCard = () => {
     const users = [user._id, contact._id];
     try {
       const response = await axios
-        .post("http://localhost:4000/createChat", {
-          chat_name: chat_name,
-          users: users,
-        })
+        .post(
+          "http://localhost:4000/createChat",
+          {
+            chat_name: chat_name,
+            users: users,
+          },
+          { withCredentials: true }
+        )
         .then((response) => {
           setIsOpen(false);
           setMessage("");

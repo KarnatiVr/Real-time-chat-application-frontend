@@ -31,7 +31,7 @@
 }
 
 .chat--card {
-  height: 90vh;
+  height: 85vh;
   width: 700px;
   background-color: white;
   margin: 20px;
@@ -40,8 +40,15 @@
   border-radius: 3%;
 }
 .chat--box{
-  height: 82%;
+  height: 90%;
   width: 100%;
+  overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; 
+}
+
+.chat--box::-webkit-scrollbar {
+  display: none;
 }
 .message--box{
   border-radius: 20px;
