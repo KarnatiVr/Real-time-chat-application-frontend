@@ -59,7 +59,7 @@ const Chat = () => {
   ];
 
   if (!chat.user)
-    return <div className="flex h-100 w-full px-5 py-3 border-b">Chat</div>;
+    return <div className="chart--card"></div>;
 
   return (
     <div className="chat--card">

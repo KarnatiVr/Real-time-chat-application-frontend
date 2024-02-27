@@ -87,3 +87,21 @@
   cursor:pointer;
   background-color: rgba(97, 180, 244, 0.279);
 }
+
+.profile--card{
+  margin: 10px;
+  height: 200px;
+  width:250px;  
+  margin: 20px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border-radius: 3%;
+
+}
+.logout--button{
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+  height: 30px;
+  width:80px;
+  margin-top: 10px;
+}

@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
+import ProfileCard from "../components/ProfileCard";
 
 const Chats = () => {
   const dispatch = useDispatch();
@@ -33,6 +34,7 @@ const Chats = () => {
 
   return (
     <div className="chats--page flex flex-row justify-center">
+      <ProfileCard />
       <ContactsCard />
       <Chat />
     </div>

@@ -67,6 +67,7 @@ const Home = () => {
       });
       console.log("response", response);
       const data = response.data;
+      /// Check the response data here and dispatch the action
       dispatch(userLoggedIn({ ...data, loggedIn: true }));
       navigate("/chat");
     } catch (err) {
