@@ -68,8 +68,10 @@ const Home = () => {
       console.log("response", response);
       const data = response.data;
       /// Check the response data here and dispatch the action
+      if(data){
       dispatch(userLoggedIn({ ...data, loggedIn: true }));
       navigate("/chat");
+      }
     } catch (err) {
       console.log(err);
       navigate("/");

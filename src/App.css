@@ -105,3 +105,8 @@
   width:80px;
   margin-top: 10px;
 }
+.empty--chat{
+position: relative;
+top: 40%;
+left:35%;
+}
