@@ -2,7 +2,6 @@ import React from 'react'
 import {  useDispatch } from "react-redux";
 import { setCurrentChat } from '../features/chats/chatsSlice'
 const Contact = (props) => {
-
   const dispatch = useDispatch();
   
   function HandleClick() {
@@ -10,6 +9,7 @@ const Contact = (props) => {
     console.log("clicked")
   }
 
+ 
   console.log(props.contact.user.name)
   return (
     <div className="contact flex flex-row gap-3" onClick={HandleClick}>
@@ -21,7 +21,7 @@ const Contact = (props) => {
       ></img>
       <div className="contact--info flex flex-col">
         <h2 className=" text-lg font-bold">{props.contact.user.name}</h2>
-        <p className="text-xs text-gray-700">{ props.contact.messages? props.contact.messages[0]?.message:""}</p>
+        <p className="text-xs text-gray-700">{ props.contact.messages? props.contact.messages[props.contact.messages.length-1]?.message:""}</p>
       </div>
     </div>
   );

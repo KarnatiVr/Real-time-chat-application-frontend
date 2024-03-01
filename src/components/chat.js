@@ -1,73 +1,60 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import io from "socket.io-client";
 import { useState } from "react";
-
+import {  socket } from "../socket/socket";
+// import { io } from "socket.io-client";
 const Chat = () => {
   const chat = useSelector((state) => state.chats.currentChat);
   const currentUser = useSelector((state) => state.user.loggedInUser);
   const [message, setMessage] = useState("");
-  const socket = io("http://localhost:4000");
-
-  // const socketRef = useRef(null);
-  // useEffect(() => {
-  //   const socket = io("http://localhost:4000");
-  //   socketRef.current = socket;
-  //   socket.on("connect", () => {
-  //     console.log(socket.id);
-  //   });
-  // }, []);
 
   function HandleChange(event) {
     setMessage(event.target.value);
   }
 
   function buttonClicked() {
-    // socketRef.current.emit("message", message);
-    // socketRef.current.on("server-message", (data) => {
-    //   console.log(data);
-    // });
-    socket.emit("message",chat.user._id, message);
+    console.log("clicked");
+    socket.emit("send-message", {
+      message,
+      sender: currentUser._id,
+      reciever: chat.user._id,
+    });
+    socket.on("receive-message", (data) => {
+      console.log(data);
+    });
   }
-  socket.on("server-message", (data) => {
-    console.log(data);
-  })
-  const sample = [
-    "hello",
-    "how are you",
-    "i am fine",
-    "what are you doing",
-    "i am working",
-    "how are you",
-    "i am fine",
-    "what are you doing",
-    "i am working",
-    "how are you",
-    "i am fine",
-    "what are you doing",
-    "i am working",
-    "how are you",
-    "i am fine",
-    "what are you doing",
-    "i am working",
-    "how are you",
-    "how are you",
-    "i am fine",
-    "what are you doing",
-    "i am working",
-    "how are you",
-    "i am fine",
-    "what are you doing",
-    "i am working",
-    "how are you",
-  ];
 
-  // if (!chat.user)
-  //   return (
-  //     <div >
-  //       <div className="chart--card"></div>
-  //     </div>
-  //   );
+
+
+  // const sample = [
+  //   "hello",
+  //   "how are you",
+  //   "i am fine",
+  //   "what are you doing",
+  //   "i am working",
+  //   "how are you",
+  //   "i am fine",
+  //   "what are you doing",
+  //   "i am working",
+  //   "how are you",
+  //   "i am fine",
+  //   "what are you doing",
+  //   "i am working",
+  //   "how are you",
+  //   "i am fine",
+  //   "what are you doing",
+  //   "i am working",
+  //   "how are you",
+  //   "how are you",
+  //   "i am fine",
+  //   "what are you doing",
+  //   "i am working",
+  //   "how are you",
+  //   "i am fine",
+  //   "what are you doing",
+  //   "i am working",
+  //   "how are you",
+  // ];
 
   return (
     <div>

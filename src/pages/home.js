@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState , useRef} from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { userLoggedIn } from "../features/login/userSlice";
 import { useNavigate } from "react-router-dom";
 const Home = () => {
   const [signUp, setSignUp] = useState(false);
+  let effetRef= useRef(false)
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -79,7 +80,13 @@ const Home = () => {
   }
 
   useEffect(() => {
-    fetchUser();
+    if(!effetRef.current){
+      fetchUser();
+    }
+
+    return () => {
+      effetRef.current = true
+    }
   }, []);
 
   return (

@@ -2,20 +2,16 @@ import React, { useEffect, useRef } from "react";
 import ContactsCard from "../components/contactsCard";
 import Chat from "../components/chat";
 import { userLoggedIn } from "../features/login/userSlice";
-import { useDispatch, useSelector } from "react-redux";
+import {  useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import io from "socket.io-client";
-
 import axios from "axios";
 import ProfileCard from "../components/ProfileCard";
-
+import { connect, setUserId, socket } from "../socket/socket";
 const Chats = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const user = useSelector((state) => state.user.loggedInUser);
-  const socketRef = useRef(null);
-
+  let effectRef = useRef(false);
+  let user= useSelector((state) => state.user.loggedInUser);
   async function fetchUser() {
     console.log("fetch User Called");
     try {
@@ -23,7 +19,8 @@ const Chats = () => {
         withCredentials: true,
       });
       console.log("response", response);
-      const data = response.data;
+      const data =await response.data;
+      socket.emit("joinRoom", data._id);
       dispatch(userLoggedIn({ ...data, loggedIn: true }));
     } catch (err) {
       console.log(err);
@@ -31,26 +28,18 @@ const Chats = () => {
     }
   }
 
-  function isLogin() {
-    if (user) {
-      return true;
-    }
-  }
+
 
   useEffect(() => {
-    fetchUser();
-    if (isLogin()) {
-      const socket = io("http://localhost:4000");
-      socketRef.current = socket;
-      socket.on("connect", () => {
-        console.log(socket.id);
-        socket.emit("online", user._id);
-      });
-      socket.on("server-message", (data) => {
-        console.log(data);
-      });
+    if (!effectRef.current) {
+      fetchUser();
+      socket.emit('message',"hello")
     }
-  }, []);
+    return () => {
+      effectRef.current = true;
+    };
+  }, [user]);
+
 
   return (
     <div className="chats--page flex flex-row justify-center">
