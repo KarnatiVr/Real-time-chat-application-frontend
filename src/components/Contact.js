@@ -9,7 +9,7 @@ const Contact = (props) => {
     console.log("clicked")
   }
 
- 
+
   console.log(props.contact.user.name)
   return (
     <div className="contact flex flex-row gap-3" onClick={HandleClick}>

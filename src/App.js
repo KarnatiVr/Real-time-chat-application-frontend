@@ -3,9 +3,12 @@ import './App.css';
 
 import {  RouterProvider } from "react-router-dom";
 import router from './routes';
-
+import { socket } from './socket/socket';
+import { UseSelector, useSelector } from 'react-redux';
 
 function App() {
+  const user=useSelector((state)=> state.user.loggedInUser)
+
   return (
     <div className="App">
       <RouterProvider router={router} />

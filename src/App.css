@@ -47,6 +47,7 @@
   -ms-overflow-style: none; 
 }
 
+
 .chat--box::-webkit-scrollbar {
   display: none;
 }
@@ -109,4 +110,12 @@
 position: relative;
 top: 40%;
 left:35%;
+/* margin-right: auto;
+text-align: left; */
+}
+.message--left{
+  text-align: left;
+}
+.message--right{
+  text-align: right;
 }

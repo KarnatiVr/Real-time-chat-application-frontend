@@ -101,6 +101,9 @@ const options = [
       >
         Send
       </button>
+      <div className="single--message">
+        hi
+      </div>
       {isOpen && (
         <div className="dropdown">
           {displayedOptions.map((option) => (

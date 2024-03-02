@@ -17,10 +17,20 @@ export const contactsSlice = createSlice({
     clearData: (state) => {
       state.contactsMatchSearch = initialState.contactsMatchSearch;
     },
+    insertMessage: (state, action) => {
+      const contact = state.contacts.find(contact=> contact._id === action.payload.chat_id)
+      contact.messages.push(action.payload.msg)
+    },
+    selectedContact:(state,action) =>{
+      const contact = state.contacts.find(
+        (contact) => contact._id === action.payload._id
+      );
+      contact.isSelected=true
+    }
   },
 });
 
-export const { setContacts, setContactsMatchSearch, clearData } =
+export const { setContacts, setContactsMatchSearch, clearData, insertMessage, selectedContact } =
   contactsSlice.actions;
 
 export default contactsSlice.reducer;
