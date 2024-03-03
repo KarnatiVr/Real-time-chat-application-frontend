@@ -21,20 +21,10 @@ const Chats = () => {
 connection is established, it emits a "joinRoom" event with the user's ID and logs a message
 "connected and joined room" to the console. This is typically used in real-time applications to
 perform actions when a socket connection is established, such as joining a specific room or channel. */
-  socket.on("connect", () => {
-    console.log("connected and joined room");
-  });
-  socket.on("receive-message", (data) => {
-    console.log(data);
-    const { chat_id, sender, receiver, message, _id } = data;
-    const msg = {
-      _id: _id,
-      sender: sender,
-      receiver: receiver,
-      message: message,
-    };
-    dispatch(insertMessage({chat_id,msg}));
-  });
+  // socket.on("connect", () => {
+  //   console.log("connected and joined room");
+  // });
+
 
   async function fetchUser() {
     console.log("fetch User Called");
@@ -54,14 +44,55 @@ perform actions when a socket connection is established, such as joining a speci
     }
   }
 
+  //   socket.on("receive-message", (data) => {
+  //     console.log(data);
+  //     console.log("called");
+  //     const { chat_id, sender, receiver, message, _id } = data;
+  //     const msg = {
+  //       _id: _id,
+  //       sender: sender,
+  //       receiver: receiver,
+  //       message: message,
+  //     };
+  //     // dispatch(insertMessage({chat_id,msg}));
+  //   });
+  // useEffect(() => {
+  //   if (!effectRef.current) {
+  //     fetchUser();
+  //   }
+  //   return () => {
+  //     effectRef.current = true;
+  //   };
+  // }, [user]);
+
   useEffect(() => {
-    if (!effectRef.current) {
-      fetchUser();
-    }
+    const fetchData = async () => {
+      if (!effectRef.current) {
+        await fetchUser();
+        socket.on("receive-message", (data) => {
+          console.log(data);
+          console.log("called");
+          const { chat_id, sender, receiver, message, _id } = data;
+          const msg = {
+            _id: _id,
+            sender: sender,
+            receiver: receiver,
+            message: message,
+          };
+          dispatch(insertMessage({chat_id,msg}));
+        });
+        effectRef.current = true;
+      }
+    };
+
+    fetchData();
+
     return () => {
-      effectRef.current = true;
+      // Clean up the event handler when the component unmounts
+      socket.off("receive-message");
     };
   }, [user]);
+
 
   return (
     <div className="chats--page flex flex-row justify-center">

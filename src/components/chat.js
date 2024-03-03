@@ -40,11 +40,14 @@ const Chat = () => {
     const chat_id=chat._id
     console.log(chat_id,msg)
     dispatch(insertMessage({chat_id, msg}))
+    dispatch(insertMessageIntoChat(msg))
     // fetchCurrentChat()
   }
 
+
     useEffect(() => {
       // Scroll to the bottom of the message box
+
       if (messageRef.current) {
         messageRef.current.scrollTop = messageRef.current.scrollHeight;
       }
