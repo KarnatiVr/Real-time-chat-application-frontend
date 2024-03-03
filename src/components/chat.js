@@ -16,13 +16,7 @@ const Chat = () => {
     setMessage(event.target.value);
   }
 
-  function fetchCurrentChat(){
-    const contact = contacts.find((contact)=>{
-      return contact._id === chat._id
-    })
-    console.log("fetch chat", contact)
-    dispatch(setCurrentChat(contact))
-  }
+
 
  function buttonClicked() {
     console.log("clicked");
@@ -35,13 +29,15 @@ const Chat = () => {
     const msg ={
       sender:currentUser._id,
       receiver:chat.user._id,
-      message:message
+      message:message,
+      isRead:true
     }
     const chat_id=chat._id
     console.log(chat_id,msg)
     dispatch(insertMessage({chat_id, msg}))
     dispatch(insertMessageIntoChat(msg))
     // fetchCurrentChat()
+    // setMessage("")
   }
 
 
@@ -52,6 +48,7 @@ const Chat = () => {
         messageRef.current.scrollTop = messageRef.current.scrollHeight;
       }
     }, [chat.messages]);
+
 
   return (
     <div>
@@ -66,14 +63,19 @@ const Chat = () => {
             ></img>
             <h2 className="text-lg font-bold ml-3 mt-1">{chat.user.name}</h2>
           </div>
-          <div ref={messageRef} className=" chat--box flex flex-col w-full px-5 ">
+          <div
+            ref={messageRef}
+            className=" chat--box flex flex-col w-full px-5 "
+          >
             {chat.messages.map((message) => (
               <div
                 className={`${
-                  currentUser._id === message.sender ? "message--right" : "message--left"
+                  currentUser._id === message.sender
+                    ? "message--right"
+                    : "message--left"
                 }`}
               >
-                {message.message}
+                <div className="single--message">{message.message}</div>
               </div>
             ))}
           </div>

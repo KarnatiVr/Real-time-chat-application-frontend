@@ -20,13 +20,17 @@
   outline: none;
   width: 250px;
 }
-.signin--button{
+.signin--button {
   background-color: rgba(97, 180, 244, 0.279);
 }
-.signup--link:hover, .fpass--link:hover, .login--link:hover,.contact:hover,.search--contact:hover{
- cursor: pointer;
+.signup--link:hover,
+.fpass--link:hover,
+.login--link:hover,
+.contact:hover,
+.search--contact:hover {
+  cursor: pointer;
 }
-.create--button{
+.create--button {
   background-color: rgba(97, 180, 244, 0.279);
 }
 
@@ -38,32 +42,32 @@
   margin-left: 30px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   border-radius: 3%;
+  overflow: none;
 }
-.chat--box{
+.chat--box {
   height: 90%;
   width: 100%;
   overflow-y: scroll;
   scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; 
+  -ms-overflow-style: none;
 }
-
 
 .chat--box::-webkit-scrollbar {
   display: none;
 }
-.message--box{
+.message--box {
   border-radius: 20px;
   height: 45px;
   width: 90%;
   padding: 5px;
   padding-left: 15px;
 }
-.send--button{
+.send--button {
   height: 35px;
   width: 7%;
   margin-top: 2px;
 }
-.test--card{
+.test--card {
   height: 50vh;
   width: 500px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
@@ -72,7 +76,7 @@
   flex-direction: column;
   overflow-y: scroll;
 }
-.dropdown{
+.dropdown {
   height: fit-content;
   width: 200px;
   display: flex;
@@ -84,38 +88,52 @@
   top: -25px;
 }
 
-.search--contact:hover{
-  cursor:pointer;
+.search--contact:hover {
+  cursor: pointer;
   background-color: rgba(97, 180, 244, 0.279);
 }
 
-.profile--card{
+.profile--card {
   margin: 10px;
   height: 200px;
-  width:250px;  
+  width: 250px;
   margin: 20px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   border-radius: 3%;
-
 }
-.logout--button{
+.logout--button {
   background-color: white;
   color: black;
   border: 1px solid black;
   height: 30px;
-  width:80px;
+  width: 80px;
   margin-top: 10px;
 }
-.empty--chat{
-position: relative;
-top: 40%;
-left:35%;
-/* margin-right: auto;
+.empty--chat {
+  position: relative;
+  top: 40%;
+  left: 35%;
+  /* margin-right: auto;
 text-align: left; */
 }
-.message--left{
-  text-align: left;
+.single--message {
+  min-width: fit-content;
+  max-width: 300px;
+  height: auto;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: rgba(27, 31, 35, 0.04) 0px 1px 0px,
+    rgba(255, 255, 255, 0.25) 0px 1px 0px inset;
+  margin: 2px;
+
 }
-.message--right{
-  text-align: right;
+
+.message--left {
+  /* float: left; */
+  margin-right: auto;
+}
+
+.message--right {
+  margin-left: auto;
 }

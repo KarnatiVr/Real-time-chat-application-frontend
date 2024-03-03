@@ -78,6 +78,7 @@ perform actions when a socket connection is established, such as joining a speci
             sender: sender,
             receiver: receiver,
             message: message,
+            isRead:false
           };
           dispatch(insertMessage({chat_id,msg}));
         });
