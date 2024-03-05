@@ -1,13 +1,12 @@
-import './App.css';
+import "./App.css";
 // import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import {  RouterProvider } from "react-router-dom";
-import router from './routes';
-import { socket } from './socket/socket';
-import { UseSelector, useSelector } from 'react-redux';
+import { RouterProvider } from "react-router-dom";
+import router from "./routes";
+import {  useSelector } from "react-redux";
 
 function App() {
-  const user=useSelector((state)=> state.user.loggedInUser)
+  const user = useSelector((state) => state.user.loggedInUser);
 
   return (
     <div className="App">
@@ -15,5 +14,4 @@ function App() {
     </div>
   );
 }
-
 export default App;

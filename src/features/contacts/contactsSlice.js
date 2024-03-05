@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+// import { useStore } from "react-redux";
+// import { initialState } from "../chats/chatsSlice";
 const initialState = {
   contacts: [],
   contactsMatchSearch: [],
 };
-
 export const contactsSlice = createSlice({
   name: "contacts",
   initialState,
@@ -18,14 +19,26 @@ export const contactsSlice = createSlice({
       state.contactsMatchSearch = initialState.contactsMatchSearch;
     },
     insertMessage: (state, action) => {
+
       const contact = state.contacts.find(
         (contact) => contact._id === action.payload.chat_id
       );
-      contact.messages.push(action.payload.msg);
+      if(contact.isSelected === true){
+        contact.messages.push({...action.payload.msg,isRead:true})
+      }
+      else{
+        contact.messages.push({ ...action.payload.msg, isRead: false });
+      }
     },
     selectedContact: (state, action) => {
+      const currentContact = state.contacts.find(
+        (contact) => contact.isSelected === true
+      );
+      if(currentContact){
+      currentContact.isSelected = false;
+      }
       const contact = state.contacts.find(
-        (contact) => contact._id === action.payload._id
+        (contact) => contact._id === action.payload
       );
       contact.isSelected = true;
     },
@@ -33,9 +46,9 @@ export const contactsSlice = createSlice({
       const contact = state.contacts.find(
         (contact) => contact._id === action.payload
       );
-      contact.messages.map((message)=>{
-        message.isRead= true
-      })
+      contact.messages.map((message) => {
+        message.isRead = true;
+      });
     },
   },
 });
@@ -46,7 +59,7 @@ export const {
   clearData,
   insertMessage,
   selectedContact,
-  setMessageReadStatus
+  setMessageReadStatus,
 } = contactsSlice.actions;
 
 export default contactsSlice.reducer;

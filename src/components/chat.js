@@ -1,54 +1,52 @@
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import {  socket } from "../socket/socket";
+import { socket } from "../socket/socket";
 import { insertMessage } from "../features/contacts/contactsSlice";
-import { insertMessageIntoChat, setCurrentChat } from "../features/chats/chatsSlice";
+import {
+  insertMessageIntoChat,
+  setCurrentChat,
+} from "../features/chats/chatsSlice";
 // import { io } from "socket.io-client";
 const Chat = () => {
   const chat = useSelector((state) => state.chats.currentChat);
   const currentUser = useSelector((state) => state.user.loggedInUser);
-  const contacts = useSelector((state)=> state.contacts.contacts)
+  const contacts = useSelector((state) => state.contacts.contacts);
   const [message, setMessage] = useState("");
-  const messageRef= useRef(null)
-  const dispatch = useDispatch()
+  const messageRef = useRef(null);
+  const dispatch = useDispatch();
   function HandleChange(event) {
     setMessage(event.target.value);
   }
 
-
-
- function buttonClicked() {
+  function buttonClicked() {
     console.log("clicked");
     socket.emit("send-message", {
-      message:message,
+      message: message,
       sender: currentUser._id,
       receiver: chat.user._id,
-      chat_id:chat._id
+      chat_id: chat._id,
     });
-    const msg ={
-      sender:currentUser._id,
-      receiver:chat.user._id,
-      message:message,
-      isRead:true
-    }
-    const chat_id=chat._id
-    console.log(chat_id,msg)
-    dispatch(insertMessage({chat_id, msg}))
-    dispatch(insertMessageIntoChat(msg))
+    const msg = {
+      sender: currentUser._id,
+      receiver: chat.user._id,
+      message: message,
+    };
+    const chat_id = chat._id;
+    console.log(chat_id, msg);
+    dispatch(insertMessage({ chat_id, msg }));
+    dispatch(insertMessageIntoChat({ chat_id, msg }));
     // fetchCurrentChat()
-    // setMessage("")
+    setMessage("");
   }
 
 
-    useEffect(() => {
-      // Scroll to the bottom of the message box
-
-      if (messageRef.current) {
-        messageRef.current.scrollTop = messageRef.current.scrollHeight;
-      }
-    }, [chat.messages]);
-
+  useEffect(() => {
+    // Scroll to the bottom of the message box
+    if (messageRef.current) {
+      messageRef.current.scrollTop = messageRef.current.scrollHeight;
+    }
+  }, [chat.messages]);
 
   return (
     <div>

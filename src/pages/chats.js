@@ -8,12 +8,13 @@ import axios from "axios";
 import ProfileCard from "../components/ProfileCard";
 import { socket } from "../socket/socket";
 import { insertMessage } from "../features/contacts/contactsSlice";
+import { insertMessageIntoChat } from "../features/chats/chatsSlice";
 const Chats = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   let effectRef = useRef(false);
   let user = useSelector((state) => state.user.loggedInUser);
-
+  const chat = useSelector((state) => state.chats.currentChat);
   /* The code snippet `socket.on("connect", () => {
     socket.emit("joinRoom", user._id);
     console.log("connected and joined room");
@@ -24,7 +25,6 @@ perform actions when a socket connection is established, such as joining a speci
   // socket.on("connect", () => {
   //   console.log("connected and joined room");
   // });
-
 
   async function fetchUser() {
     console.log("fetch User Called");
@@ -43,27 +43,15 @@ perform actions when a socket connection is established, such as joining a speci
       navigate("/");
     }
   }
+  socket.on("receive-message", (data) => {
+    // console.log("this is inside chat component")
+    const { chat_id } = data;
+    if (chat_id === chat._id) {
+      // console.log("both are same")
+      socket.emit("message-read", chat_id, user._id);
+    }
+  });
 
-  //   socket.on("receive-message", (data) => {
-  //     console.log(data);
-  //     console.log("called");
-  //     const { chat_id, sender, receiver, message, _id } = data;
-  //     const msg = {
-  //       _id: _id,
-  //       sender: sender,
-  //       receiver: receiver,
-  //       message: message,
-  //     };
-  //     // dispatch(insertMessage({chat_id,msg}));
-  //   });
-  // useEffect(() => {
-  //   if (!effectRef.current) {
-  //     fetchUser();
-  //   }
-  //   return () => {
-  //     effectRef.current = true;
-  //   };
-  // }, [user]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -73,14 +61,14 @@ perform actions when a socket connection is established, such as joining a speci
           console.log(data);
           console.log("called");
           const { chat_id, sender, receiver, message, _id } = data;
-          const msg = {
-            _id: _id,
-            sender: sender,
-            receiver: receiver,
-            message: message,
-            isRead:false
-          };
-          dispatch(insertMessage({chat_id,msg}));
+            const msg = {
+              _id: _id,
+              sender: sender,
+              receiver: receiver,
+              message: message,
+            };
+            dispatch(insertMessage({ chat_id, msg }));
+            dispatch(insertMessageIntoChat({ chat_id, msg }));
         });
         effectRef.current = true;
       }
@@ -89,11 +77,10 @@ perform actions when a socket connection is established, such as joining a speci
     fetchData();
 
     return () => {
-      // Clean up the event handler when the component unmounts
+      // Clean up the event  when the component unmounts
       socket.off("receive-message");
     };
   }, [user]);
-
 
   return (
     <div className="chats--page flex flex-row justify-center">

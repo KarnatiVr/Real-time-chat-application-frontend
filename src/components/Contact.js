@@ -1,15 +1,17 @@
 import React from 'react'
-import {  useDispatch } from "react-redux";
+import {  useDispatch, useSelector } from "react-redux";
 import { setCurrentChat } from '../features/chats/chatsSlice'
 import { socket } from '../socket/socket';
-import { setMessageReadStatus } from '../features/contacts/contactsSlice';
+import { selectedContact, setMessageReadStatus } from '../features/contacts/contactsSlice';
 const Contact = (props) => {
   const dispatch = useDispatch();
-  const count = props.contact.messages.filter((message)=> message.isRead===false)?.length
+  const user=useSelector((state)=> state.user.loggedInUser)
+  const count = props.contact.messages.filter((message)=> (message.receiver === user._id && message.isRead===false))?.length
   function HandleClick() {
     dispatch(setCurrentChat(props.contact))
     console.log("clicked")
-    socket.emit("message-read",props.contact._id)
+    socket.emit("message-read",props.contact._id, user._id)
+    dispatch(selectedContact(props.contact._id))
     dispatch(setMessageReadStatus(props.contact._id))
   }
   
@@ -37,12 +39,12 @@ const Contact = (props) => {
         <div className=" flex flex-row justify-between text-xs text-gray-700">
           {props.contact.messages.length > 0
             ? props.contact.messages[props.contact.messages.length - 1].message
-                .length <= 10
+                .length <= 20
               ? props.contact.messages[props.contact.messages.length - 1]
                   .message
               : `${props.contact.messages[
                   props.contact.messages.length - 1
-                ]?.message.substring(0, 7)}...`
+                ]?.message.substring(0,15)}...`
             : ""}
           <p>
             {count > 0 && (
