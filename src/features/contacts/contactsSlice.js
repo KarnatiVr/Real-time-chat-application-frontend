@@ -19,23 +19,24 @@ export const contactsSlice = createSlice({
       state.contactsMatchSearch = initialState.contactsMatchSearch;
     },
     insertMessage: (state, action) => {
-
       const contact = state.contacts.find(
         (contact) => contact._id === action.payload.chat_id
       );
-      if(contact.isSelected === true){
-        contact.messages.push({...action.payload.msg,isRead:true})
-      }
-      else{
-        contact.messages.push({ ...action.payload.msg, isRead: false });
+      console.log("insert Message => " ,contact)
+      if (contact !== undefined) {
+        if (contact.isSelected === true) {
+          contact.messages.push({ ...action.payload.msg, isRead: true });
+        } else {
+          contact.messages.push({ ...action.payload.msg, isRead: false });
+        }
       }
     },
     selectedContact: (state, action) => {
       const currentContact = state.contacts.find(
         (contact) => contact.isSelected === true
       );
-      if(currentContact){
-      currentContact.isSelected = false;
+      if (currentContact) {
+        currentContact.isSelected = false;
       }
       const contact = state.contacts.find(
         (contact) => contact._id === action.payload
@@ -46,7 +47,7 @@ export const contactsSlice = createSlice({
       const contact = state.contacts.find(
         (contact) => contact._id === action.payload
       );
-      contact.messages.map((message) => {
+      contact.messages.forEach((message) => {
         message.isRead = true;
       });
     },

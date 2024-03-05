@@ -9,12 +9,15 @@ import ProfileCard from "../components/ProfileCard";
 import { socket } from "../socket/socket";
 import { insertMessage } from "../features/contacts/contactsSlice";
 import { insertMessageIntoChat } from "../features/chats/chatsSlice";
+import { setContacts } from "../features/contacts/contactsSlice";
 const Chats = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   let effectRef = useRef(false);
+  let doesContactExist;
   let user = useSelector((state) => state.user.loggedInUser);
   const chat = useSelector((state) => state.chats.currentChat);
+  const contacts= useSelector((state) => state.contacts.contacts)
   /* The code snippet `socket.on("connect", () => {
     socket.emit("joinRoom", user._id);
     console.log("connected and joined room");
@@ -25,6 +28,24 @@ perform actions when a socket connection is established, such as joining a speci
   // socket.on("connect", () => {
   //   console.log("connected and joined room");
   // });
+
+    async function fetchContacts() {
+      try {
+        const response = await axios.post(
+          "http://localhost:4000/fetchContacts",
+          {
+            id: user._id,
+          },
+          { withCredentials: true }
+        );
+        const contacts = response.data;
+        console.log(contacts);
+        dispatch(setContacts(contacts));
+      } catch (error) {
+        console.log(error);
+      }
+      console.log(user._id);
+    }
 
   async function fetchUser() {
     console.log("fetch User Called");
@@ -44,12 +65,21 @@ perform actions when a socket connection is established, such as joining a speci
     }
   }
   socket.on("receive-message", (data) => {
-    // console.log("this is inside chat component")
     const { chat_id } = data;
+
+    console.log("this is inside chat component")
+    doesContactExist = contacts.filter((contact) => contact._id === chat_id).length > 0
+    console.log(doesContactExist)
+    if(!doesContactExist){
+      fetchContacts();
+    }
+    else{
     if (chat_id === chat._id) {
       // console.log("both are same")
       socket.emit("message-read", chat_id, user._id);
     }
+    }
+
   });
 
 
